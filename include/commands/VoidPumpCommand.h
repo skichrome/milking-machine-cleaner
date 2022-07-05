@@ -1,0 +1,12 @@
+#ifndef VOID_PUMP_COMMAND_H
+#define VOID_PUMP_COMMAND_H
+
+#include "RelayCommand.h"
+
+class VoidPumpCommand : public RelayCommand
+{
+public:
+    VoidPumpCommand(byte mPin) : RelayCommand(mPin){};
+};
+
+#endif
