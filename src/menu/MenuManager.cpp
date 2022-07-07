@@ -19,10 +19,10 @@ void MenuManager::loop()
     }
 }
 
-void MenuManager::changeMenu()
+void MenuManager::changeSelection()
 {
 }
 
-void MenuManager::confirmMenu()
+void MenuManager::confirmSelection()
 {
 }

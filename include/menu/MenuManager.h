@@ -30,8 +30,8 @@ public:
     void setup();
     void loop();
 
-    void changeMenu();
-    void confirmMenu();
+    void changeSelection();
+    void confirmSelection();
 };
 
 #endif

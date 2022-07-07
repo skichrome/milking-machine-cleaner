@@ -6,7 +6,7 @@
 class MilkPumpCommand : public RelayCommand
 {
 public:
-    MilkPumpCommand(byte mPin) : RelayCommand(mPin){};
+    MilkPumpCommand(uint8_t mPin) : RelayCommand(mPin){};
 };
 
 #endif

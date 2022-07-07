@@ -6,7 +6,7 @@
 class RelayCommand
 {
 private:
-    byte pin;
+    uint8_t pin;
 
     enum RelayState
     {
@@ -17,7 +17,7 @@ private:
     RelayState previousState;
 
 public:
-    RelayCommand(byte mPin);
+    RelayCommand(uint8_t mPin);
 
     void setup();
     void loop();

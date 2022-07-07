@@ -1,6 +1,6 @@
 #include "commands/RelayCommand.h"
 
-RelayCommand::RelayCommand(byte mPin)
+RelayCommand::RelayCommand(uint8_t mPin)
 {
     pin = mPin;
 }

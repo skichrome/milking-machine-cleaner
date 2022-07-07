@@ -6,7 +6,7 @@
 class VoidPumpCommand : public RelayCommand
 {
 public:
-    VoidPumpCommand(byte mPin) : RelayCommand(mPin){};
+    VoidPumpCommand(uint8_t mPin) : RelayCommand(mPin){};
 };
 
 #endif
