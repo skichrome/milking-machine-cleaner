@@ -4,6 +4,8 @@ void MenuManager::setup()
 {
     voidPumpCommand.setup();
     milkPumpCommand.setup();
+    hotWaterCommand.setup();
+    coldWaterCommand.setup();
 
     lcd.init();
     lcd.backlight();
@@ -13,6 +15,8 @@ void MenuManager::loop()
 {
     voidPumpCommand.loop();
     milkPumpCommand.loop();
+    hotWaterCommand.loop();
+    coldWaterCommand.loop();
 
     if (isInCleanMenu)
         printCleanMenu();
@@ -64,10 +68,24 @@ void MenuManager::confirmSelection()
         }
         case 2: // Cold water valve
         {
+            coldWaterCommand.switchState();
+
+            // change state display of void pump
+            if (coldWaterCommand.isRelayOn())
+                mainSubTitles[2] = onLine;
+            else
+                mainSubTitles[2] = offLine;
             break;
         }
         case 3: // Hot water valve
         {
+            hotWaterCommand.switchState();
+
+            // change state display of void pump
+            if (hotWaterCommand.isRelayOn())
+                mainSubTitles[3] = onLine;
+            else
+                mainSubTitles[3] = offLine;
             break;
         }
         case 4: // Void pump cmd

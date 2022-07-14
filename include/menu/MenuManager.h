@@ -7,9 +7,13 @@
 
 #include "commands/VoidPumpCommand.h"
 #include "commands/MilkPumpCommand.h"
+#include "commands/ColdWaterCommand.h"
+#include "commands/HotWaterCommand.h"
 
 #define VOID_PUMP_PIN 28
 #define MILK_PUMP_PIN 30
+#define HOT_WATER_PIN 32
+#define COLD_WATER_PIN 34
 
 #define LCD_I2C_ADDRESS 0x3F
 #define LCD_MAX_LENGTH 16
@@ -35,6 +39,8 @@ private:
 
     VoidPumpCommand voidPumpCommand = VoidPumpCommand(VOID_PUMP_PIN);
     MilkPumpCommand milkPumpCommand = MilkPumpCommand(MILK_PUMP_PIN);
+    ColdWaterCommand coldWaterCommand = ColdWaterCommand(COLD_WATER_PIN);
+    HotWaterCommand hotWaterCommand = HotWaterCommand(HOT_WATER_PIN);
 
     LiquidCrystal_I2C lcd;
     long startTimeMs = 0L;
