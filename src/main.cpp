@@ -23,6 +23,9 @@ MilkPumpCommand milkPumpCommand = MilkPumpCommand(MILK_PUMP_PIN);
 void setup()
 {
   menuManager.setup();
+  navMenuBtn.setup();
+  confirmMenuBtn.setup();
+
   voidPumpCommand.setup();
   milkPumpCommand.setup();
 }
@@ -30,6 +33,9 @@ void setup()
 void loop()
 {
   menuManager.loop();
+  navMenuBtn.loop();
+  confirmMenuBtn.loop();
+
   voidPumpCommand.loop();
   milkPumpCommand.loop();
 }

@@ -8,6 +8,7 @@ Button::Button(byte mPin)
 void Button::setup()
 {
     pinMode(pin, INPUT_PULLUP);
+    state = ButtonState::RELEASED;
 }
 
 void Button::loop()
@@ -30,7 +31,7 @@ void Button::loop()
     }
     case ButtonState::ANTI_BOUNCE:
     {
-        if (millis() - lastAntiBounceTimeMs > ANTI_BOUNCE_TIME_MS)
+        if (millis() - lastAntiBounceTimeMs > ANTI_BOUNCE_TIME_MS && digitalRead(pin))
             state = ButtonState::RELEASED;
         break;
     }
