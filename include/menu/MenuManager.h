@@ -5,6 +5,12 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
+#include "commands/VoidPumpCommand.h"
+#include "commands/MilkPumpCommand.h"
+
+#define VOID_PUMP_PIN 28
+#define MILK_PUMP_PIN 30
+
 #define LCD_I2C_ADDRESS 0x3F
 #define LCD_MAX_LENGTH 16
 
@@ -23,6 +29,9 @@ private:
     unsigned int positionCleanMenu = 0;
 
     bool isInCleanMenu = false;
+
+    VoidPumpCommand voidPumpCommand = VoidPumpCommand(VOID_PUMP_PIN);
+    MilkPumpCommand milkPumpCommand = MilkPumpCommand(MILK_PUMP_PIN);
 
     LiquidCrystal_I2C lcd;
     long startTimeMs = 0L;

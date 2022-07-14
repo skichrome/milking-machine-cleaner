@@ -36,3 +36,23 @@ void RelayCommand::switchRelay(bool newState)
     else
         relayState = RelayState::DISABLED;
 }
+
+void RelayCommand::turnOn()
+{
+    if (relayState == RelayState::DISABLED)
+        switchRelay(true);
+}
+
+void RelayCommand::turnOff()
+{
+    if (relayState == RelayState::ENABLED)
+        switchRelay(false);
+}
+
+void RelayCommand::switchState()
+{
+    if (relayState == RelayState::ENABLED)
+        turnOff();
+    else
+        turnOn();
+}

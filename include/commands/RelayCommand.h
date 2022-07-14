@@ -24,6 +24,9 @@ public:
 
     bool isRelayOn();
     void switchRelay(bool newState);
+    void turnOn();
+    void turnOff();
+    void switchState();
 };
 
 #endif
