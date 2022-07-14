@@ -17,11 +17,14 @@
 class MenuManager
 {
 private:
+    const char *onLine =    "     marche     ";
+    const char *offLine =   "     arret      ";
+    const char *emptyLine = "                ";
+
     const char *mainTitles[17] =     {" Lavage normal  ", " Autres lavages ", "   Eau Froide   ", "   Eau Chaude   ", "  Pompe a vide  ", "  Pompe a lait  "};
-    const char *mainSubTitles[17] =  {"       -->      ", "       -->      ", "       off      ", "       off      ", "       off      ", "       off      "};
+    const char *mainSubTitles[17] =  {"       -->      ", "       -->      ",      offLine      ,      offLine      ,      offLine      ,      offLine      };
     const char *cleanTitles[17] =    {" Depart depuis  ", " Depart depuis  ", " Depart depuis  ", " Lavage de choc ", "Eau chaude seule", "1er rincage seul", "     Retour     "};
     const char *cleanSubTitles[17] = {"   eau chaude   ", "  1er rincage   ", "  2nd rincage   ", "       -->      ", "       -->      ", "       -->      ", "       <--      "};
-    const char *emptyLine = "                ";
 
     const unsigned int mainMenuSize = 6;
     const unsigned int cleanMenuSize = 7;

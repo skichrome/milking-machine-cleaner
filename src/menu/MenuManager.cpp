@@ -73,11 +73,23 @@ void MenuManager::confirmSelection()
         case 4: // Void pump cmd
         {
             voidPumpCommand.switchState();
+
+            // change state display of void pump
+            if (voidPumpCommand.isRelayOn())
+                mainSubTitles[4] = onLine;
+            else
+                mainSubTitles[4] = offLine;
             break;
         }
         case 5: // Milk pump cmd
         {
             milkPumpCommand.switchState();
+
+            // Change state display of milk pump
+            if (milkPumpCommand.isRelayOn())
+                mainSubTitles[5] = onLine;
+            else
+                mainSubTitles[5] = offLine;
             break;
         }
 
