@@ -11,18 +11,24 @@
 class MenuManager
 {
 private:
-    const char *titles[17] = {"Demarrer lavage?", "   Eau Froide   ", "   Eau Chaude   ", "  Pompe a vide  ", "  Pompe a lait  "};
-    const char *menuLine = "";
+    const char *mainTitles[17] =     {" Lavage normal  ", " Autres lavages ", "   Eau Froide   ", "   Eau Chaude   ", "  Pompe a vide  ", "  Pompe a lait  "};
+    const char *mainSubTitles[17] =  {"       -->      ", "       -->      ", "       off      ", "       off      ", "       off      ", "       off      "};
+    const char *cleanTitles[17] =    {" Depart depuis  ", " Depart depuis  ", " Depart depuis  ", " Lavage de choc ", "Eau chaude seule", "1er rincage seul", "     Retour     "};
+    const char *cleanSubTitles[17] = {"   eau chaude   ", "  1er rincage   ", "  2nd rincage   ", "       -->      ", "       -->      ", "       -->      ", "       <--      "};
     const char *emptyLine = "                ";
 
-    const unsigned int menuSize = 5;
-    unsigned int positionMenu = 0;
+    const unsigned int mainMenuSize = 6;
+    const unsigned int cleanMenuSize = 7;
+    unsigned int positionMainMenu = 0;
+    unsigned int positionCleanMenu = 0;
 
-    bool isChangeRequested = false;
-    bool isConfirmRequested = false;
+    bool isInCleanMenu = false;
 
     LiquidCrystal_I2C lcd;
     long startTimeMs = 0L;
+
+    void printMainMenu();
+    void printCleanMenu();
 
 public:
     MenuManager() : lcd(LCD_I2C_ADDRESS, LCD_MAX_LENGTH, 2) {}
