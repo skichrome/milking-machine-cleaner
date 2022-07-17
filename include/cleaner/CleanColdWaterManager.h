@@ -1,5 +1,5 @@
-#ifndef CLEAN_HOT_WATER_MANAGER_H
-#define CLEAN_HOT_WATER_MANAGER_H
+#ifndef CLEAN_COLD_WATER_MANAGER_H
+#define CLEAN_COLD_WATER_MANAGER_H
 
 #include "Config.h"
 
@@ -9,7 +9,7 @@
 #include "commands/ThreeWayValveCommand.h"
 #include "inputs/WaterSensor.h"
 
-class CleanHotWaterManager
+class CleanColdWaterManager
 {
 private:
     enum State
@@ -35,6 +35,8 @@ private:
     void evacuateWater();
     void purgeWater();
 
+    bool isDryingRequired;
+
     const char **screenMsg;
 
     unsigned long cleanStartMs = 0L;
@@ -43,12 +45,12 @@ private:
     unsigned long stopVoidPumpStartMs = 0L;
 
 public:
-    CleanHotWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand);
+    CleanColdWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand);
 
     void setup();
     void loop();
 
-    void start(const char **msgToDisplay);
+    void start(const bool isDryingRequired, const char **msgToDisplay);
     void pauseFillingWater();
     void resumeFillingWater();
     bool isDone();

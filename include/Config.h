@@ -43,5 +43,16 @@
 // Nombre de caractères de l'écran par ligne
 #define LCD_MAX_LENGTH 16
 
+// ---------------- //
+//  Temps de lavage //
+// ---------------- //
+
+#define CLEAN_COLD_WATER_DURATION_MS 1L * 60L * 1000L
+#define CLEAN_AND_DRY_COLD_WATER_DURATION_MS CLEAN_COLD_WATER_DURATION_MS * 12L
+#define CLEAN_HOT_WATER_DURATION_MS 8L * 60L * 1000L
+
+#define EVACUATION_DURATION_MS 1L * 60L * 1000L
+#define PURGE_DURATION_MS 7L * 1000L
+#define STOP_VOID_PUMP_DURATION_MS 1L * 1000L
 
 #endif
