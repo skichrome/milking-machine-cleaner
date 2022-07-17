@@ -45,7 +45,7 @@ private:
     void printCleanMenu();
 
 public:
-    MenuManager() : lcd(LCD_I2C_ADDRESS, LCD_MAX_LENGTH, 2) {}
+    MenuManager() : lcd(LCD_I2C_ADDRESS, LCD_MAX_LENGTH, LCD_MAX_LINES) {}
 
     void setup();
     void loop();

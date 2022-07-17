@@ -43,6 +43,9 @@
 // Nombre de caractères de l'écran par ligne
 #define LCD_MAX_LENGTH 16
 
+// Nombre de lignes de l'écran
+#define LCD_MAX_LINES 2
+
 // ---------------- //
 //  Temps de lavage //
 // ---------------- //
