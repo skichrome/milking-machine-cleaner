@@ -5,20 +5,13 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
+#include "Config.h"
+
 #include "commands/VoidPumpCommand.h"
 #include "commands/MilkPumpCommand.h"
 #include "commands/ColdWaterCommand.h"
 #include "commands/HotWaterCommand.h"
 #include "commands/ThreeWayValveCommand.h"
-
-#define VOID_PUMP_PIN 28
-#define MILK_PUMP_PIN 30
-#define HOT_WATER_PIN 32
-#define COLD_WATER_PIN 34
-#define THREE_WAY_VALVE_PIN 40
-
-#define LCD_I2C_ADDRESS 0x3F
-#define LCD_MAX_LENGTH 16
 
 class MenuManager
 {

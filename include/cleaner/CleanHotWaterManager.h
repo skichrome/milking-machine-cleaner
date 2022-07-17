@@ -1,13 +1,13 @@
 #ifndef CLEAN_HOT_WATER_MANAGER_H
 #define CLEAN_HOT_WATER_MANAGER_H
 
+#include "Config.h"
+
 #include "commands/VoidPumpCommand.h"
 #include "commands/MilkPumpCommand.h"
 #include "commands/HotWaterCommand.h"
 #include "commands/ThreeWayValveCommand.h"
 #include "inputs/WaterSensor.h"
-
-#define WATER_SENSOR_PIN A7
 
 class CleanHotWaterManager
 {
