@@ -5,6 +5,7 @@
 
 #include "commands/VoidPumpCommand.h"
 #include "commands/MilkPumpCommand.h"
+#include "commands/ColdWaterCommand.h"
 #include "commands/HotWaterCommand.h"
 #include "commands/ThreeWayValveCommand.h"
 #include "inputs/WaterSensor.h"
@@ -25,6 +26,7 @@ private:
 
     VoidPumpCommand *voidPumpCommand;
     MilkPumpCommand *milkPumpCommand;
+    ColdWaterCommand *coldWaterCommand;
     HotWaterCommand *hotWaterCommand;
     ThreeWayValveCommand *threeWayValveCommand;
 
@@ -35,6 +37,7 @@ private:
     void evacuateWater();
     void purgeWater();
 
+    bool coldMode = false;
     const char **screenMsg;
 
     unsigned long cleanStartMs = 0L;
@@ -43,12 +46,12 @@ private:
     unsigned long stopVoidPumpStartMs = 0L;
 
 public:
-    CleanHotWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand);
+    CleanHotWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, ColdWaterCommand *mColdWaterCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand);
 
     void setup();
     void loop();
 
-    void start(const char **msgToDisplay);
+    void start(const bool coldWaterMode, const char **msgToDisplay);
     void pauseFillingWater();
     void resumeFillingWater();
     bool isDone();

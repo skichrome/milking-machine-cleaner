@@ -1,9 +1,10 @@
 #include "cleaner/CleanHotWaterManager.h"
 
-CleanHotWaterManager::CleanHotWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand)
+CleanHotWaterManager::CleanHotWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, ColdWaterCommand *mColdWaterCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand)
 {
     voidPumpCommand = mVoidPumpCommand;
     milkPumpCommand = mMilkPumpCommand;
+    coldWaterCommand = mColdWaterCommand;
     hotWaterCommand = mHotWaterCommand;
     threeWayValveCommand = mThreeWayValveCommand;
 }
@@ -55,10 +56,17 @@ void CleanHotWaterManager::fillWater()
 {
     *screenMsg = " Remplissage... ";
     threeWayValveCommand->turnOn();
-    hotWaterCommand->turnOn();
+
+    if (coldMode)
+        coldWaterCommand->turnOn();
+    else
+        hotWaterCommand->turnOn();
+
     if (waterSensor.isLevelReached())
     {
+        coldWaterCommand->turnOff();
         hotWaterCommand->turnOff();
+
         cleanStartMs = millis();
         state = State::CLEANING_MACHINE;
     }
@@ -106,8 +114,9 @@ void CleanHotWaterManager::purgeWater()
 
 // --- Public command methods --- //
 
-void CleanHotWaterManager::start(const char **msgToDisplay)
+void CleanHotWaterManager::start(const bool coldWaterMode, const char **msgToDisplay)
 {
+    coldMode = coldWaterMode;
     *screenMsg = *msgToDisplay;
     waterSensor.resetSensor();
     state = State::FILLING_WATER;
