@@ -10,6 +10,11 @@ void MenuManager::setup()
     milkPumpCommand.setup();
     hotWaterCommand.setup();
     coldWaterCommand.setup();
+    threeWayValveCommand.setup();
+
+    coldCleanManager.setup();
+    hotCleanManager.setup();
+    cleanManager.setup();
 
     lcd.init();
     lcd.backlight();
@@ -21,6 +26,11 @@ void MenuManager::loop()
     milkPumpCommand.loop();
     hotWaterCommand.loop();
     coldWaterCommand.loop();
+    threeWayValveCommand.loop();
+
+    coldCleanManager.loop();
+    hotCleanManager.loop();
+    cleanManager.loop();
 
     if (isInCleanMenu)
         printCleanMenu();
