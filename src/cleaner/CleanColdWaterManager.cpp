@@ -1,10 +1,10 @@
 #include "cleaner/CleanColdWaterManager.h"
 
-CleanColdWaterManager::CleanColdWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand)
+CleanColdWaterManager::CleanColdWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, ColdWaterCommand *mColdWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand)
 {
     voidPumpCommand = mVoidPumpCommand;
     milkPumpCommand = mMilkPumpCommand;
-    hotWaterCommand = mHotWaterCommand;
+    coldWaterCommand = mColdWaterCommand;
     threeWayValveCommand = mThreeWayValveCommand;
 }
 
@@ -31,11 +31,6 @@ void CleanColdWaterManager::loop()
         cleanMachine();
         break;
     }
-    case State::EVACUATING_WATER:
-    {
-        evacuateWater();
-        break;
-    }
     case State::PURGING_WATER:
     {
         purgeWater();
@@ -53,12 +48,12 @@ void CleanColdWaterManager::loop()
 
 void CleanColdWaterManager::fillWater()
 {
-    *screenMsg = " Remplissage... ";
-    threeWayValveCommand->turnOn();
-    hotWaterCommand->turnOn();
+    screenMsg = " Remplissage... ";
+    threeWayValveCommand->turnOff();
+    coldWaterCommand->turnOn();
     if (waterSensor.isLevelReached())
     {
-        hotWaterCommand->turnOff();
+        coldWaterCommand->turnOff();
         cleanStartMs = millis();
         state = State::CLEANING_MACHINE;
     }
@@ -66,22 +61,10 @@ void CleanColdWaterManager::fillWater()
 
 void CleanColdWaterManager::cleanMachine()
 {
-    *screenMsg = "     Lavage     ";
+    screenMsg = "     Lavage     ";
     voidPumpCommand->turnOn();
 
     if (millis() - cleanStartMs > (isDryingRequired ? CLEAN_AND_DRY_COLD_WATER_DURATION_MS : CLEAN_COLD_WATER_DURATION_MS))
-    {
-        evacuationStartMs = millis();
-        state = State::EVACUATING_WATER;
-    }
-}
-
-void CleanColdWaterManager::evacuateWater()
-{
-    *screenMsg = "   Evacuation   ";
-    threeWayValveCommand->turnOff();
-
-    if (millis() - evacuationStartMs > EVACUATION_DURATION_MS)
     {
         purgeStartMs = millis();
         stopVoidPumpStartMs = purgeStartMs + PURGE_DURATION_MS;
@@ -91,7 +74,7 @@ void CleanColdWaterManager::evacuateWater()
 
 void CleanColdWaterManager::purgeWater()
 {
-    *screenMsg = "     purge      ";
+    screenMsg = "     purge      ";
     milkPumpCommand->turnOn();
     if (millis() - purgeStartMs > PURGE_DURATION_MS)
     {
@@ -107,17 +90,17 @@ void CleanColdWaterManager::purgeWater()
 
 // --- Public command methods --- //
 
-void CleanColdWaterManager::start(const bool mIsDryingRequired, const char **msgToDisplay)
+void CleanColdWaterManager::start(const bool mIsDryingRequired, const char *msgToDisplay)
 {
     isDryingRequired = mIsDryingRequired;
-    *screenMsg = *msgToDisplay;
+    screenMsg = msgToDisplay;
     waterSensor.resetSensor();
     state = State::FILLING_WATER;
 }
 
 void CleanColdWaterManager::pauseFillingWater()
 {
-    *screenMsg = "    En pause    ";
+    screenMsg = "    En pause    ";
     if (state == State::FILLING_WATER)
         state = State::PAUSE_FILLING_WATER;
 }

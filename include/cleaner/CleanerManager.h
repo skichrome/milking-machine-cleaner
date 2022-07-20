@@ -16,7 +16,7 @@
 class CleanerManager
 {
 private:
-    const char **screenMsg;
+    const char *screenMsg;
 
     bool isCleanStarted;
     unsigned int numberOfSteps;
@@ -71,7 +71,7 @@ private:
     void runHotClean(bool coldCleanMode);
 
 public:
-    CleanerManager(CleanColdWaterManager *mColdWaterCleaner, CleanHotWaterManager *mHotWaterCleaner, const char **msgToDisplay);
+    CleanerManager(CleanColdWaterManager *mColdWaterCleaner, CleanHotWaterManager *mHotWaterCleaner, const char *msgToDisplay);
 
     void setup();
     void loop();

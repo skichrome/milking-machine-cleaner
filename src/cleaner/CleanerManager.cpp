@@ -1,6 +1,6 @@
 #include "cleaner/CleanerManager.h"
 
-CleanerManager::CleanerManager(CleanColdWaterManager *mColdWaterCleaner, CleanHotWaterManager *mHotWaterCleaner, const char **msgToDisplay)
+CleanerManager::CleanerManager(CleanColdWaterManager *mColdWaterCleaner, CleanHotWaterManager *mHotWaterCleaner, const char *msgToDisplay)
 {
     coldWaterCleaner = mColdWaterCleaner;
     hotWaterCleaner = mHotWaterCleaner;
