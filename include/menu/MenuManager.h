@@ -13,9 +13,15 @@
 #include "commands/HotWaterCommand.h"
 #include "commands/ThreeWayValveCommand.h"
 
+#include "cleaner/CleanColdWaterManager.h"
+#include "cleaner/CleanHotWaterManager.h"
+#include "cleaner/CleanerManager.h"
+
 class MenuManager
 {
 private:
+    const char *screenMsg = NULL;
+
     const char *onLine =    "     marche     ";
     const char *offLine =   "     arret      ";
     const char *emptyLine = "                ";
@@ -38,14 +44,18 @@ private:
     HotWaterCommand hotWaterCommand = HotWaterCommand(HOT_WATER_PIN);
     ThreeWayValveCommand threeWayValveCommand = ThreeWayValveCommand(THREE_WAY_VALVE_PIN);
 
-    LiquidCrystal_I2C lcd;
+    CleanColdWaterManager coldCleanManager = CleanColdWaterManager(&voidPumpCommand, &milkPumpCommand, &coldWaterCommand, &threeWayValveCommand);
+    CleanHotWaterManager hotCleanManager = CleanHotWaterManager(&voidPumpCommand, &milkPumpCommand, &coldWaterCommand, &hotWaterCommand, &threeWayValveCommand);
+    CleanerManager cleanManager = CleanerManager(&coldCleanManager, &hotCleanManager, screenMsg);
+
+    LiquidCrystal_I2C lcd = LiquidCrystal_I2C(LCD_I2C_ADDRESS, LCD_MAX_LENGTH, LCD_MAX_LINES);
     long startTimeMs = 0L;
 
     void printMainMenu();
     void printCleanMenu();
 
 public:
-    MenuManager() : lcd(LCD_I2C_ADDRESS, LCD_MAX_LENGTH, LCD_MAX_LINES) {}
+    MenuManager();
 
     void setup();
     void loop();

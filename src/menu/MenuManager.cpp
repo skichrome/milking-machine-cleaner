@@ -1,5 +1,9 @@
 #include "menu/MenuManager.h"
 
+MenuManager::MenuManager()
+{
+}
+
 void MenuManager::setup()
 {
     voidPumpCommand.setup();
@@ -119,6 +123,11 @@ void MenuManager::confirmSelection()
 
 void MenuManager::printMainMenu()
 {
+    if (screenMsg == nullptr)
+    {
+        // todo : ?
+    }
+
     lcd.home();
     lcd.print(mainTitles[positionMainMenu]);
     lcd.setCursor(0, 1);
