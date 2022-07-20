@@ -52,11 +52,42 @@ void MenuManager::confirmSelection()
     {
         switch (positionCleanMenu)
         {
-        case 0: // Start from hot water
+        case 0:
         {
+            cleanManager.startCleanFromHotWater();
             break;
         }
-        case 6: // Back
+        case 1:
+        {
+            cleanManager.startCleanFromFirstRince();
+            break;
+        }
+        case 2:
+        {
+            cleanManager.startCleanFromSecondRince();
+            break;
+        }
+        case 3:
+        {
+            cleanManager.startPeraceticClean();
+            break;
+        }
+        case 4:
+        {
+            cleanManager.startImpactClean();
+            break;
+        }
+        case 5:
+        {
+            cleanManager.startOnlyHotWaterClean();
+            break;
+        }
+        case 6:
+        {
+            cleanManager.startOnlyFirstRince();
+            break;
+        }
+        case 7:
         {
             isInCleanMenu = false;
             break;
