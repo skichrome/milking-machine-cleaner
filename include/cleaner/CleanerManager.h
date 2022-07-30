@@ -12,11 +12,11 @@
 #define IMPACT_CLEAN_SEQ_SIZE 5
 #define ONLY_HOT_WATER_CLEAN_SEQ_SIZE 1
 #define ONLY_FIRST_RINCE_CLEAN_SEQ_SIZE 1
- 
+
 class CleanerManager
 {
 private:
-    const char *screenMsg;
+    const char **screenMsg;
 
     bool isCleanStarted;
     unsigned int numberOfSteps;
@@ -71,7 +71,7 @@ private:
     void runHotClean(bool coldCleanMode);
 
 public:
-    CleanerManager(CleanColdWaterManager *mColdWaterCleaner, CleanHotWaterManager *mHotWaterCleaner, const char *msgToDisplay);
+    CleanerManager(CleanColdWaterManager *mColdWaterCleaner, CleanHotWaterManager *mHotWaterCleaner, const char **msgToDisplay);
 
     void setup();
     void loop();

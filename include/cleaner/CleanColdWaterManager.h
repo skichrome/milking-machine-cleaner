@@ -35,7 +35,7 @@ private:
 
     bool isDryingRequired;
 
-    const char *screenMsg;
+    const char **screenMsg;
 
     unsigned long cleanStartMs = 0L;
     unsigned long purgeStartMs = 0L;
@@ -47,7 +47,7 @@ public:
     void setup();
     void loop();
 
-    void start(const bool isDryingRequired, const char *msgToDisplay);
+    void start(const bool isDryingRequired, const char **msgToDisplay);
     void pauseFillingWater();
     void resumeFillingWater();
     bool isStarted();

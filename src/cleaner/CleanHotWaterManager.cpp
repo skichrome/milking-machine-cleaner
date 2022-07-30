@@ -58,7 +58,7 @@ void CleanHotWaterManager::loop()
 
 void CleanHotWaterManager::fillWater()
 {
-    screenMsg = " Remplissage... ";
+    *screenMsg = " Remplissage... ";
     threeWayValveCommand->turnOn();
 
     if (coldMode)
@@ -78,7 +78,7 @@ void CleanHotWaterManager::fillWater()
 
 void CleanHotWaterManager::cleanMachine()
 {
-    screenMsg = "     Lavage     ";
+    *screenMsg = "     Lavage     ";
     voidPumpCommand->turnOn();
     if (millis() - cleanStartMs > CLEAN_HOT_WATER_DURATION_MS)
     {
@@ -89,7 +89,7 @@ void CleanHotWaterManager::cleanMachine()
 
 void CleanHotWaterManager::evacuateWater()
 {
-    screenMsg = "   Evacuation   ";
+    *screenMsg = "   Evacuation   ";
     threeWayValveCommand->turnOff();
 
     if (millis() - evacuationStartMs > EVACUATION_DURATION_MS)
@@ -102,7 +102,7 @@ void CleanHotWaterManager::evacuateWater()
 
 void CleanHotWaterManager::purgeWater()
 {
-    screenMsg = "     purge      ";
+    *screenMsg = "     purge      ";
     milkPumpCommand->turnOn();
     if (millis() - purgeStartMs > PURGE_DURATION_MS)
     {
@@ -118,7 +118,7 @@ void CleanHotWaterManager::purgeWater()
 
 // --- Public command methods --- //
 
-void CleanHotWaterManager::start(const bool coldWaterMode, const char *msgToDisplay)
+void CleanHotWaterManager::start(const bool coldWaterMode, const char **msgToDisplay)
 {
     coldMode = coldWaterMode;
     screenMsg = msgToDisplay;
@@ -128,7 +128,7 @@ void CleanHotWaterManager::start(const bool coldWaterMode, const char *msgToDisp
 
 void CleanHotWaterManager::pauseFillingWater()
 {
-    screenMsg = "    En pause    ";
+    *screenMsg = "    En pause    ";
     if (state == State::FILLING_WATER)
         state = State::PAUSE_FILLING_WATER;
 }

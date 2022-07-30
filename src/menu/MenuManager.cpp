@@ -36,6 +36,11 @@ void MenuManager::loop()
         printCleanMenu();
     else if (!isInCleanMenu && !cleanManager.isBusy())
         printMainMenu();
+    else
+    {
+        lcd.home();
+        lcd.print(firstLineMessage);
+    }
 }
 
 void MenuManager::changeSelection()
