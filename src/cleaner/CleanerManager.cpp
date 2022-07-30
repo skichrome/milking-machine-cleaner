@@ -15,15 +15,19 @@ void CleanerManager::setup()
 
 void CleanerManager::loop()
 {
-    if (currentRunningStep > NORMAL_CLEAN_SEQ_SIZE)
+    if (isCleanStarted && currentRunningStep >= numberOfSteps)
     {
         currentCleanSequence = NULL;
+        numberOfSteps = 0;
         isCleanStarted = false;
+
+        coldWaterCleaner->resetIfDone();
+        hotWaterCleaner->resetIfDone();
     }
 
     if (isCleanStarted)
     {
-        switch (normalCleanSequence[currentRunningStep])
+        switch (currentCleanSequence[currentRunningStep])
         {
         case CleanState::PREWASH:
             runColdClean(false);
@@ -141,7 +145,7 @@ void CleanerManager::startOnlyFirstRince()
 
 void CleanerManager::runColdClean(bool dryRequired)
 {
-    if (!coldWaterCleaner->isDone())
+    if (!coldWaterCleaner->isStarted())
         coldWaterCleaner->start(dryRequired, screenMsg);
 
     if (coldWaterCleaner->isDone())
@@ -150,10 +154,9 @@ void CleanerManager::runColdClean(bool dryRequired)
 
 void CleanerManager::runHotClean(bool coldCleanMode)
 {
-    if (!hotWaterCleaner->isDone())
+    if (!hotWaterCleaner->isStarted())
         hotWaterCleaner->start(coldCleanMode, screenMsg);
 
     if (hotWaterCleaner->isDone())
         currentRunningStep++;
-    ;
 }

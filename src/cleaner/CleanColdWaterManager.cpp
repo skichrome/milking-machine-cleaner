@@ -10,11 +10,14 @@ CleanColdWaterManager::CleanColdWaterManager(VoidPumpCommand *mVoidPumpCommand, 
 
 void CleanColdWaterManager::setup()
 {
+    waterSensor.setup();
+
     state = State::WAITING_START;
 }
 
 void CleanColdWaterManager::loop()
 {
+    waterSensor.loop();
     switch (state)
     {
     case State::FILLING_WATER:
@@ -114,7 +117,18 @@ void CleanColdWaterManager::resumeFillingWater()
     }
 }
 
+bool CleanColdWaterManager::isStarted()
+{
+    return state != State::WAITING_START;
+}
+
 bool CleanColdWaterManager::isDone()
 {
     return state == State::DONE;
+}
+
+void CleanColdWaterManager::resetIfDone()
+{
+    if (state == State::DONE)
+        state = State::WAITING_START;
 }

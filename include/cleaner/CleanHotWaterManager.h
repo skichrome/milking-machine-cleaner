@@ -54,7 +54,9 @@ public:
     void start(const bool coldWaterMode, const char *msgToDisplay);
     void pauseFillingWater();
     void resumeFillingWater();
+    bool isStarted();
     bool isDone();
+    void resetIfDone();
 };
 
 #endif

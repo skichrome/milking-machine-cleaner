@@ -50,7 +50,9 @@ public:
     void start(const bool isDryingRequired, const char *msgToDisplay);
     void pauseFillingWater();
     void resumeFillingWater();
+    bool isStarted();
     bool isDone();
+    void resetIfDone();
 };
 
 #endif
