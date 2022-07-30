@@ -32,23 +32,23 @@ void MenuManager::loop()
     hotCleanManager.loop();
     cleanManager.loop();
 
-    if (isInCleanMenu)
+    if (isInCleanMenu && !cleanManager.isBusy())
         printCleanMenu();
-    else
+    else if (!isInCleanMenu && !cleanManager.isBusy())
         printMainMenu();
 }
 
 void MenuManager::changeSelection()
 {
-    if (isInCleanMenu)
+    if (isInCleanMenu && !cleanManager.isBusy())
         positionCleanMenu = (positionCleanMenu + 1) % cleanMenuSize;
-    else
+    else if (!isInCleanMenu && !cleanManager.isBusy())
         positionMainMenu = (positionMainMenu + 1) % mainMenuSize;
 }
 
 void MenuManager::confirmSelection()
 {
-    if (isInCleanMenu)
+    if (isInCleanMenu && !cleanManager.isBusy())
     {
         switch (positionCleanMenu)
         {
@@ -97,12 +97,13 @@ void MenuManager::confirmSelection()
             break;
         }
     }
-    else
+    else if (!isInCleanMenu && !cleanManager.isBusy())
     {
         switch (positionMainMenu)
         {
         case 0: // Normal cleaning
         {
+            cleanManager.startNormalClean();
             break;
         }
         case 1: // Other cleaning
@@ -164,11 +165,6 @@ void MenuManager::confirmSelection()
 
 void MenuManager::printMainMenu()
 {
-    if (screenMsg == nullptr)
-    {
-        // todo : ?
-    }
-
     lcd.home();
     lcd.print(mainTitles[positionMainMenu]);
     lcd.setCursor(0, 1);

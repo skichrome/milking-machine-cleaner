@@ -149,7 +149,10 @@ void CleanerManager::runColdClean(bool dryRequired)
         coldWaterCleaner->start(dryRequired, screenMsg);
 
     if (coldWaterCleaner->isDone())
+    {
+        coldWaterCleaner->resetIfDone();
         currentRunningStep++;
+    }
 }
 
 void CleanerManager::runHotClean(bool coldCleanMode)
@@ -158,5 +161,13 @@ void CleanerManager::runHotClean(bool coldCleanMode)
         hotWaterCleaner->start(coldCleanMode, screenMsg);
 
     if (hotWaterCleaner->isDone())
+    {
+        hotWaterCleaner->resetIfDone();
         currentRunningStep++;
+    }
+}
+
+bool CleanerManager::isBusy()
+{
+    return isCleanStarted;
 }

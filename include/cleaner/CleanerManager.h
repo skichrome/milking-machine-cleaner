@@ -12,7 +12,7 @@
 #define IMPACT_CLEAN_SEQ_SIZE 5
 #define ONLY_HOT_WATER_CLEAN_SEQ_SIZE 1
 #define ONLY_FIRST_RINCE_CLEAN_SEQ_SIZE 1
-
+ 
 class CleanerManager
 {
 private:
@@ -84,6 +84,8 @@ public:
     void startImpactClean();
     void startOnlyHotWaterClean();
     void startOnlyFirstRince();
+
+    bool isBusy();
 };
 
 #endif
