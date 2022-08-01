@@ -1,17 +1,17 @@
 #include "cleaner/CleanColdWaterManager.h"
 
-CleanColdWaterManager::CleanColdWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, ColdWaterCommand *mColdWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand)
+CleanColdWaterManager::CleanColdWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, ColdWaterCommand *mColdWaterCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand)
 {
     voidPumpCommand = mVoidPumpCommand;
     milkPumpCommand = mMilkPumpCommand;
     coldWaterCommand = mColdWaterCommand;
+    hotWaterCommand = mHotWaterCommand;
     threeWayValveCommand = mThreeWayValveCommand;
 }
 
 void CleanColdWaterManager::setup()
 {
     waterSensor.setup();
-
     state = State::WAITING_START;
 }
 
@@ -20,6 +20,11 @@ void CleanColdWaterManager::loop()
     waterSensor.loop();
     switch (state)
     {
+    case State::PRE_HEAT_WATER:
+    {
+        preHeatHotWater();
+        break;
+    }
     case State::FILLING_WATER:
     {
         fillWater();
@@ -48,6 +53,21 @@ void CleanColdWaterManager::loop()
 }
 
 // --- Private methods --- //
+
+void CleanColdWaterManager::preHeatHotWater()
+{
+    *firstLineMsg = "  Prechauffage  ";
+    setSecondLineMessage(PRE_HEAT_HOT_WATER_PIPE_MS - (millis() - preHeatHotWaterStartMs));
+
+    threeWayValveCommand->turnOff();
+    hotWaterCommand->turnOn();
+
+    if (millis() - preHeatHotWaterStartMs > PRE_HEAT_HOT_WATER_PIPE_MS)
+    {
+        hotWaterCommand->turnOff();
+        state = State::FILLING_WATER;
+    }
+}
 
 void CleanColdWaterManager::fillWater()
 {
@@ -126,7 +146,11 @@ void CleanColdWaterManager::start(const bool mIsDryingRequired, const char **mFi
     firstLineMsg = mFirstLineMsg;
     secondLineMsg = mSecondLineMsg;
     waterSensor.resetSensor();
-    state = State::FILLING_WATER;
+
+    if (mIsDryingRequired)
+        state = State::FILLING_WATER;
+    else
+        state = State::PRE_HEAT_WATER;
 }
 
 void CleanColdWaterManager::pauseFillingWater()

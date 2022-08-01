@@ -12,7 +12,6 @@ CleanHotWaterManager::CleanHotWaterManager(VoidPumpCommand *mVoidPumpCommand, Mi
 void CleanHotWaterManager::setup()
 {
     waterSensor.setup();
-
     state = State::WAITING_START;
 }
 

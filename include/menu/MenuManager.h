@@ -45,7 +45,7 @@ private:
     HotWaterCommand hotWaterCommand = HotWaterCommand(HOT_WATER_PIN);
     ThreeWayValveCommand threeWayValveCommand = ThreeWayValveCommand(THREE_WAY_VALVE_PIN);
 
-    CleanColdWaterManager coldCleanManager = CleanColdWaterManager(&voidPumpCommand, &milkPumpCommand, &coldWaterCommand, &threeWayValveCommand);
+    CleanColdWaterManager coldCleanManager = CleanColdWaterManager(&voidPumpCommand, &milkPumpCommand, &coldWaterCommand, &hotWaterCommand, &threeWayValveCommand);
     CleanHotWaterManager hotCleanManager = CleanHotWaterManager(&voidPumpCommand, &milkPumpCommand, &coldWaterCommand, &hotWaterCommand, &threeWayValveCommand);
     CleanerManager cleanManager = CleanerManager(&coldCleanManager, &hotCleanManager, &firstLineMessage, &secondLineMessage);
 
