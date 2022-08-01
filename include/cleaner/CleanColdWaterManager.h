@@ -32,11 +32,13 @@ private:
     void fillWater();
     void cleanMachine();
     void purgeWater();
+    void setSecondLineMessage(unsigned long remainingTime);
 
     bool isDryingRequired;
 
     const char **firstLineMsg;
     const char **secondLineMsg;
+    String tmpSecondLineStr;
 
     unsigned long cleanStartMs = 0L;
     unsigned long purgeStartMs = 0L;

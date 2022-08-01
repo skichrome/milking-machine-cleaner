@@ -40,6 +40,8 @@ void MenuManager::loop()
     {
         lcd.home();
         lcd.print(firstLineMessage);
+        lcd.setCursor(0, 1);
+        lcd.print(secondLineMessage);
     }
 }
 

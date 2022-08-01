@@ -36,10 +36,12 @@ private:
     void cleanMachine();
     void evacuateWater();
     void purgeWater();
+    void setSecondLineMessage(unsigned long remainingTime);
 
     bool coldMode = false;
     const char **firstLineMsg;
     const char **secondLineMsg;
+    String tmpSecondLineStr;
 
     unsigned long cleanStartMs = 0L;
     unsigned long evacuationStartMs = 0L;

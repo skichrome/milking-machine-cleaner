@@ -59,6 +59,7 @@ void CleanHotWaterManager::loop()
 void CleanHotWaterManager::fillWater()
 {
     *firstLineMsg = " Remplissage... ";
+    *secondLineMsg = "                ";
     threeWayValveCommand->turnOn();
 
     if (coldMode)
@@ -79,6 +80,8 @@ void CleanHotWaterManager::fillWater()
 void CleanHotWaterManager::cleanMachine()
 {
     *firstLineMsg = "     Lavage     ";
+    setSecondLineMessage(CLEAN_HOT_WATER_DURATION_MS - (millis() - cleanStartMs));
+
     voidPumpCommand->turnOn();
     if (millis() - cleanStartMs > CLEAN_HOT_WATER_DURATION_MS)
     {
@@ -90,6 +93,8 @@ void CleanHotWaterManager::cleanMachine()
 void CleanHotWaterManager::evacuateWater()
 {
     *firstLineMsg = "   Evacuation   ";
+    setSecondLineMessage(EVACUATION_DURATION_MS - (millis() - evacuationStartMs));
+
     threeWayValveCommand->turnOff();
 
     if (millis() - evacuationStartMs > EVACUATION_DURATION_MS)
@@ -103,6 +108,8 @@ void CleanHotWaterManager::evacuateWater()
 void CleanHotWaterManager::purgeWater()
 {
     *firstLineMsg = "     purge      ";
+    setSecondLineMessage(PURGE_DURATION_MS - (millis() - purgeStartMs));
+
     milkPumpCommand->turnOn();
     if (millis() - purgeStartMs > PURGE_DURATION_MS)
     {
@@ -114,6 +121,26 @@ void CleanHotWaterManager::purgeWater()
             state = State::DONE;
         }
     }
+}
+
+void CleanHotWaterManager::setSecondLineMessage(unsigned long remainingTime)
+{
+    unsigned long m = remainingTime / 1000uL / 60uL;
+    unsigned long s = remainingTime / 1000uL;
+
+    if (m > 100 || s > 100)
+        return;
+
+    if (m < 10 && s < 10)
+        tmpSecondLineStr = "      0" + String(m) + ":0" + String(s) + "     ";
+    else if (m < 10 && s >= 10)
+        tmpSecondLineStr = "      0" + String(m) + ":" + String(s) + "     ";
+    else if (m >= 10 && s < 10)
+        tmpSecondLineStr = "       " + String(m) + ":0" + String(s) + "    ";
+    else
+        tmpSecondLineStr = "       " + String(m) + ":" + String(s) + "    ";
+
+    *secondLineMsg = tmpSecondLineStr.c_str();
 }
 
 // --- Public command methods --- //

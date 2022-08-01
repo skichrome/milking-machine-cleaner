@@ -52,6 +52,7 @@ void CleanColdWaterManager::loop()
 void CleanColdWaterManager::fillWater()
 {
     *firstLineMsg = " Remplissage... ";
+    *secondLineMsg = "                ";
     threeWayValveCommand->turnOff();
     coldWaterCommand->turnOn();
     if (waterSensor.isLevelReached())
@@ -64,7 +65,9 @@ void CleanColdWaterManager::fillWater()
 
 void CleanColdWaterManager::cleanMachine()
 {
-    *firstLineMsg = "     Lavage     ";
+    *firstLineMsg = isDryingRequired ? "rincage-sechage " : "     rincage    ";
+    setSecondLineMessage((isDryingRequired ? CLEAN_AND_DRY_COLD_WATER_DURATION_MS : CLEAN_COLD_WATER_DURATION_MS) - (millis() - cleanStartMs));
+
     voidPumpCommand->turnOn();
 
     if (millis() - cleanStartMs > (isDryingRequired ? CLEAN_AND_DRY_COLD_WATER_DURATION_MS : CLEAN_COLD_WATER_DURATION_MS))
@@ -77,8 +80,11 @@ void CleanColdWaterManager::cleanMachine()
 
 void CleanColdWaterManager::purgeWater()
 {
-    *firstLineMsg = "     purge      ";
+    *firstLineMsg = "      purge     ";
+    setSecondLineMessage(PURGE_DURATION_MS - (millis() - purgeStartMs));
+
     milkPumpCommand->turnOn();
+
     if (millis() - purgeStartMs > PURGE_DURATION_MS)
     {
         milkPumpCommand->turnOff();
@@ -89,6 +95,27 @@ void CleanColdWaterManager::purgeWater()
             state = State::DONE;
         }
     }
+}
+
+void CleanColdWaterManager::setSecondLineMessage(unsigned long remainingTime)
+{
+    unsigned long m = remainingTime / 1000uL / 60uL;
+    remainingTime = remainingTime % (1000uL * 60uL);
+    unsigned long s = remainingTime / 1000uL;
+
+    if (m > 100 || s > 100)
+        return;
+
+    if (m < 10 && s < 10)
+        tmpSecondLineStr = "      0" + String(m) + ":0" + String(s) + "     ";
+    else if (m < 10 && s >= 10)
+        tmpSecondLineStr = "      0" + String(m) + ":" + String(s) + "     ";
+    else if (m >= 10 && s < 10)
+        tmpSecondLineStr = "       " + String(m) + ":0" + String(s) + "    ";
+    else
+        tmpSecondLineStr = "       " + String(m) + ":" + String(s) + "    ";
+
+    *secondLineMsg = tmpSecondLineStr.c_str();
 }
 
 // --- Public command methods --- //
