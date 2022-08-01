@@ -150,7 +150,10 @@ void CleanColdWaterManager::start(const bool mIsDryingRequired, const char **mFi
     if (mIsDryingRequired)
         state = State::FILLING_WATER;
     else
+    {
+        preHeatHotWaterStartMs = millis();
         state = State::PRE_HEAT_WATER;
+    }
 }
 
 void CleanColdWaterManager::pauseFillingWater()
