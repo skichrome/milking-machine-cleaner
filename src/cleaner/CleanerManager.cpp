@@ -1,10 +1,11 @@
 #include "cleaner/CleanerManager.h"
 
-CleanerManager::CleanerManager(CleanColdWaterManager *mColdWaterCleaner, CleanHotWaterManager *mHotWaterCleaner, const char **msgToDisplay)
+CleanerManager::CleanerManager(CleanColdWaterManager *mColdWaterCleaner, CleanHotWaterManager *mHotWaterCleaner, const char **mFirstLineMsg, const char **mSecondLineMsg)
 {
     coldWaterCleaner = mColdWaterCleaner;
     hotWaterCleaner = mHotWaterCleaner;
-    screenMsg = msgToDisplay;
+    firstLineMsg = mFirstLineMsg;
+    secondLineMsg = mSecondLineMsg;
 }
 
 void CleanerManager::setup()
@@ -146,7 +147,7 @@ void CleanerManager::startOnlyFirstRince()
 void CleanerManager::runColdClean(bool dryRequired)
 {
     if (!coldWaterCleaner->isStarted())
-        coldWaterCleaner->start(dryRequired, screenMsg);
+        coldWaterCleaner->start(dryRequired, firstLineMsg, secondLineMsg);
 
     if (coldWaterCleaner->isDone())
     {
@@ -158,7 +159,7 @@ void CleanerManager::runColdClean(bool dryRequired)
 void CleanerManager::runHotClean(bool coldCleanMode)
 {
     if (!hotWaterCleaner->isStarted())
-        hotWaterCleaner->start(coldCleanMode, screenMsg);
+        hotWaterCleaner->start(coldCleanMode, firstLineMsg, secondLineMsg);
 
     if (hotWaterCleaner->isDone())
     {

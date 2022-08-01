@@ -21,6 +21,7 @@ class MenuManager
 {
 private:
     const char *firstLineMessage;
+    const char *secondLineMessage;
 
     const char *onLine =    "     marche     ";
     const char *offLine =   "     arret      ";
@@ -46,7 +47,7 @@ private:
 
     CleanColdWaterManager coldCleanManager = CleanColdWaterManager(&voidPumpCommand, &milkPumpCommand, &coldWaterCommand, &threeWayValveCommand);
     CleanHotWaterManager hotCleanManager = CleanHotWaterManager(&voidPumpCommand, &milkPumpCommand, &coldWaterCommand, &hotWaterCommand, &threeWayValveCommand);
-    CleanerManager cleanManager = CleanerManager(&coldCleanManager, &hotCleanManager, &firstLineMessage);
+    CleanerManager cleanManager = CleanerManager(&coldCleanManager, &hotCleanManager, &firstLineMessage, &secondLineMessage);
 
     LiquidCrystal_I2C lcd = LiquidCrystal_I2C(LCD_I2C_ADDRESS, LCD_MAX_LENGTH, LCD_MAX_LINES);
     long startTimeMs = 0L;

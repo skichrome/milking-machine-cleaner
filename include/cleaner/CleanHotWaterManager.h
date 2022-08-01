@@ -38,7 +38,8 @@ private:
     void purgeWater();
 
     bool coldMode = false;
-    const char **screenMsg;
+    const char **firstLineMsg;
+    const char **secondLineMsg;
 
     unsigned long cleanStartMs = 0L;
     unsigned long evacuationStartMs = 0L;
@@ -51,7 +52,7 @@ public:
     void setup();
     void loop();
 
-    void start(const bool coldWaterMode, const char **msgToDisplay);
+    void start(const bool coldWaterMode, const char **mFirstLineMsg, const char **mSecondLineMsg);
     void pauseFillingWater();
     void resumeFillingWater();
     bool isStarted();
