@@ -125,6 +125,7 @@ void CleanHotWaterManager::purgeWater()
 void CleanHotWaterManager::setSecondLineMessage(unsigned long remainingTime)
 {
     unsigned long m = remainingTime / 1000uL / 60uL;
+    remainingTime = remainingTime % (1000uL * 60uL);
     unsigned long s = remainingTime / 1000uL;
 
     if (m > 100 || s > 100)
