@@ -55,7 +55,11 @@ void MenuManager::changeSelection()
 
 void MenuManager::confirmSelection()
 {
-    if (isInCleanMenu && !cleanManager.isBusy())
+    if (cleanManager.isBusy())
+    {
+        cleanManager.pauseOrResumeFill();
+    }
+    else if (isInCleanMenu && !cleanManager.isBusy())
     {
         switch (positionCleanMenu)
         {

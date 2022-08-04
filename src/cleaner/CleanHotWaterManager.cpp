@@ -28,6 +28,7 @@ void CleanHotWaterManager::loop()
     }
     case State::PAUSE_FILLING_WATER:
     {
+        *firstLineMsg = "    En pause    ";
         break;
     }
     case State::CLEANING_MACHINE:
@@ -156,7 +157,6 @@ void CleanHotWaterManager::start(const bool coldWaterMode, const char **mFirstLi
 
 void CleanHotWaterManager::pauseFillingWater()
 {
-    *firstLineMsg = "    En pause    ";
     if (state == State::FILLING_WATER)
         state = State::PAUSE_FILLING_WATER;
 }
@@ -173,6 +173,11 @@ void CleanHotWaterManager::resumeFillingWater()
 bool CleanHotWaterManager::isStarted()
 {
     return state != State::WAITING_START;
+}
+
+bool CleanHotWaterManager::isFillingPaused()
+{
+    return state == State::PAUSE_FILLING_WATER;
 }
 
 bool CleanHotWaterManager::isDone()

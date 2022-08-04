@@ -31,7 +31,7 @@ void CleanerManager::loop()
         switch (currentCleanSequence[currentRunningStep])
         {
         case CleanState::PREWASH:
-            runColdClean(false);
+            runColdClean(true, false);
             break;
         case CleanState::CLEAN:
             runHotClean(false);
@@ -40,10 +40,10 @@ void CleanerManager::loop()
             runHotClean(true);
             break;
         case CleanState::RINCE:
-            runColdClean(false);
+            runColdClean(false, false);
             break;
         case CleanState::RINCE_AND_DRY:
-            runColdClean(true);
+            runColdClean(false, true);
             break;
 
         default:
@@ -144,10 +144,10 @@ void CleanerManager::startOnlyFirstRince()
 
 // --- Common methods for clean --- //
 
-void CleanerManager::runColdClean(bool dryRequired)
+void CleanerManager::runColdClean(bool isPreHeatRequired, bool dryRequired)
 {
     if (!coldWaterCleaner->isStarted())
-        coldWaterCleaner->start(dryRequired, firstLineMsg, secondLineMsg);
+        coldWaterCleaner->start(isPreHeatRequired, dryRequired, firstLineMsg, secondLineMsg);
 
     if (coldWaterCleaner->isDone())
     {
@@ -171,4 +171,17 @@ void CleanerManager::runHotClean(bool coldCleanMode)
 bool CleanerManager::isBusy()
 {
     return isCleanStarted;
+}
+
+void CleanerManager::pauseOrResumeFill()
+{
+    if (coldWaterCleaner->isFillingPaused())
+        coldWaterCleaner->resumeFillingWater();
+    else if (coldWaterCleaner->isStarted())
+        coldWaterCleaner->pauseFillingWater();
+
+    if (hotWaterCleaner->isFillingPaused())
+        hotWaterCleaner->resumeFillingWater();
+    else if (hotWaterCleaner->isStarted())
+        hotWaterCleaner->pauseFillingWater();
 }

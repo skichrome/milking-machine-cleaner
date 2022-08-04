@@ -32,6 +32,7 @@ void CleanColdWaterManager::loop()
     }
     case State::PAUSE_FILLING_WATER:
     {
+        *firstLineMsg = "    En pause    ";
         break;
     }
     case State::CLEANING_MACHINE:
@@ -140,25 +141,24 @@ void CleanColdWaterManager::setSecondLineMessage(unsigned long remainingTime)
 
 // --- Public command methods --- //
 
-void CleanColdWaterManager::start(const bool mIsDryingRequired, const char **mFirstLineMsg, const char **mSecondLineMsg)
+void CleanColdWaterManager::start(const bool mIsPreHeatRequired, const bool mIsDryingRequired, const char **mFirstLineMsg, const char **mSecondLineMsg)
 {
     isDryingRequired = mIsDryingRequired;
     firstLineMsg = mFirstLineMsg;
     secondLineMsg = mSecondLineMsg;
     waterSensor.resetSensor();
 
-    if (mIsDryingRequired)
-        state = State::FILLING_WATER;
-    else
+    if (mIsPreHeatRequired)
     {
         preHeatHotWaterStartMs = millis();
         state = State::PRE_HEAT_WATER;
     }
+    else
+        state = State::FILLING_WATER;
 }
 
 void CleanColdWaterManager::pauseFillingWater()
 {
-    *firstLineMsg = "    En pause    ";
     if (state == State::FILLING_WATER)
         state = State::PAUSE_FILLING_WATER;
 }
@@ -175,6 +175,11 @@ void CleanColdWaterManager::resumeFillingWater()
 bool CleanColdWaterManager::isStarted()
 {
     return state != State::WAITING_START;
+}
+
+bool CleanColdWaterManager::isFillingPaused()
+{
+    return state == State::PAUSE_FILLING_WATER;
 }
 
 bool CleanColdWaterManager::isDone()

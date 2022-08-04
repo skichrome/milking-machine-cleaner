@@ -68,7 +68,7 @@ private:
     void runOnlyHotWaterClean();
     void runOnlyFirstRince();
 
-    void runColdClean(bool dryRequired);
+    void runColdClean(bool isPreHeatRequired, bool dryRequired);
     void runHotClean(bool coldCleanMode);
 
 public:
@@ -87,6 +87,7 @@ public:
     void startOnlyFirstRince();
 
     bool isBusy();
+    void pauseOrResumeFill();
 };
 
 #endif

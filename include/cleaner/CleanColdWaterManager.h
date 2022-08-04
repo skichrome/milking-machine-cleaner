@@ -55,10 +55,11 @@ public:
     void setup();
     void loop();
 
-    void start(const bool isDryingRequired, const char **mFirstLineMsg, const char **mSecondLineMsg);
+    void start(const bool mIsPreHeatRequired, const bool isDryingRequired, const char **mFirstLineMsg, const char **mSecondLineMsg);
     void pauseFillingWater();
     void resumeFillingWater();
     bool isStarted();
+    bool isFillingPaused();
     bool isDone();
     void resetIfDone();
 };

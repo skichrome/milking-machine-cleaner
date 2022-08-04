@@ -58,6 +58,7 @@ public:
     void pauseFillingWater();
     void resumeFillingWater();
     bool isStarted();
+    bool isFillingPaused();
     bool isDone();
     void resetIfDone();
 };
