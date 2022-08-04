@@ -38,7 +38,8 @@
 // ---------------- //
 
 // Adresse de l'écran pour l'affichage visuel des menus et des statuts
-#define LCD_I2C_ADDRESS 0x3F
+// A déterminer avec un programme de recherche de périphériques I2C disponible sur internet
+#define LCD_I2C_ADDRESS 0x27
 
 // Nombre de caractères de l'écran par ligne
 #define LCD_MAX_LENGTH 16
