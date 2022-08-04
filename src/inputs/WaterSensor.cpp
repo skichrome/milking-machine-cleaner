@@ -7,13 +7,13 @@ WaterSensor::WaterSensor(uint8_t mPin)
 
 void WaterSensor::setup()
 {
-    pinMode(pin, INPUT);
+    pinMode(pin, INPUT_PULLUP);
     state = State::IDLE;
 }
 
 void WaterSensor::loop()
-{
-    if (state == State::IDLE && digitalRead(pin))
+{   
+    if (state == State::IDLE && !digitalRead(pin))
         state = State::TRIGGERED;
 }
 
