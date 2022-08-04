@@ -184,4 +184,7 @@ void CleanerManager::pauseOrResumeFill()
         hotWaterCleaner->resumeFillingWater();
     else if (hotWaterCleaner->isStarted())
         hotWaterCleaner->pauseFillingWater();
+
+    if (hotWaterCleaner->isStarted())
+        hotWaterCleaner->endEvacuate();
 }

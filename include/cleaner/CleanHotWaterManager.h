@@ -48,6 +48,12 @@ private:
     unsigned long purgeStartMs = 0L;
     unsigned long stopVoidPumpStartMs = 0L;
 
+    // Todo: TMP manual evacuation mode
+    bool isBtnPressed = false;
+    bool ledState = true;
+    unsigned long ledBlinkStartMs = 0L;
+    const unsigned long LED_BLINK_DURATION_MS = 500L;
+
 public:
     CleanHotWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, ColdWaterCommand *mColdWaterCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand);
 
@@ -61,6 +67,8 @@ public:
     bool isFillingPaused();
     bool isDone();
     void resetIfDone();
+
+    void endEvacuate();
 };
 
 #endif

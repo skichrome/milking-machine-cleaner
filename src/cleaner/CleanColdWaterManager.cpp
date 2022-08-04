@@ -33,6 +33,8 @@ void CleanColdWaterManager::loop()
     case State::PAUSE_FILLING_WATER:
     {
         *firstLineMsg = "    En pause    ";
+        coldWaterCommand->turnOff();
+        hotWaterCommand->turnOff();
         break;
     }
     case State::CLEANING_MACHINE:

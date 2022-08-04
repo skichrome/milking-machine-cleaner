@@ -53,11 +53,17 @@
 
 #define PRE_HEAT_HOT_WATER_PIPE_MS 1uL * 20uL * 1000uL
 #define CLEAN_COLD_WATER_DURATION_MS 2uL * 60uL * 1000uL
-#define CLEAN_AND_DRY_COLD_WATER_DURATION_MS CLEAN_COLD_WATER_DURATION_MS * 12uL
+#define CLEAN_AND_DRY_COLD_WATER_DURATION_MS  12uL * 60uL * 1000uL
 #define CLEAN_HOT_WATER_DURATION_MS 8uL * 60uL * 1000uL
 
 #define EVACUATION_DURATION_MS 2uL * 60uL * 1000uL
 #define PURGE_DURATION_MS 7uL * 1000uL
 #define STOP_VOID_PUMP_DURATION_MS 1uL * 1000uL
+
+// ---------------- //
+//       Ledsn       //
+// ---------------- //
+
+#define PIN_RGB_LED_RED 2
 
 #endif
