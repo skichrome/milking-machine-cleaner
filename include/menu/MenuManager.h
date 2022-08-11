@@ -27,12 +27,12 @@ private:
     const char *offLine =   "     arret      ";
     const char *emptyLine = "                ";
 
-    const char *mainTitles[17] =     {" Lavage normal  ", " Autres lavages ", "   Eau Froide   ", "   Eau Chaude   ", "  Pompe a vide  ", "  Pompe a lait  "};
-    const char *mainSubTitles[17] =  {"       -->      ", "       -->      ",      offLine      ,      offLine      ,      offLine      ,      offLine      };
+    const char *mainTitles[17] =     {" Lavage normal  ", " Autres lavages ", "   Eau Froide   ", "   Eau Chaude   ", "  Pompe a vide  ", "  Pompe a lait  ", " Vanne 3 voies  "};
+    const char *mainSubTitles[17] =  {"       -->      ", "       -->      ",      offLine      ,      offLine      ,      offLine      ,      offLine      ,      offLine      };
     const char *cleanTitles[17] =    {" Depart depuis  ", " Depart depuis  ", " Depart depuis  ", "  peracetique   ", " Lavage de choc ", "Eau chaude seule", "1er rincage seul", "     Retour     "};
     const char *cleanSubTitles[17] = {"   eau chaude   ", "  1er rincage   ", "  2nd rincage   ", "       -->      ", "       -->      ", "       -->      ", "       -->      ", "       <--      "};
 
-    const unsigned int mainMenuSize = 6;
+    const unsigned int mainMenuSize = 7;
     const unsigned int cleanMenuSize = 8;
     unsigned int positionMainMenu = 0;
     unsigned int positionCleanMenu = 0;

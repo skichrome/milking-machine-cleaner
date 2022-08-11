@@ -167,6 +167,17 @@ void MenuManager::confirmSelection()
                 mainSubTitles[5] = offLine;
             break;
         }
+        case 6:
+        {
+            threeWayValveCommand.switchState();
+
+            // Change state display of 3-way valve
+            if (threeWayValveCommand.isRelayOn())
+                mainSubTitles[6] = onLine;
+            else
+                mainSubTitles[6] = offLine;
+            break;
+        }
 
         default:
             break;
