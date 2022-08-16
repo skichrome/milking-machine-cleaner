@@ -18,9 +18,12 @@ private:
         WAITING_START,
         PRE_HEAT_WATER,
         FILLING_WATER,
+        COOLDOWN_AFTER_FILL,
         PAUSE_FILLING_WATER,
         CLEANING_MACHINE,
         PURGING_WATER,
+        COOLDOWN_AFTER_PURGE,
+        FINAL_COOLDOWN,
         DONE
     } state;
 
@@ -44,10 +47,10 @@ private:
     const char **secondLineMsg;
     String tmpSecondLineStr;
 
-    unsigned long preHeatHotWaterStartMs = 0L;
-    unsigned long cleanStartMs = 0L;
-    unsigned long purgeStartMs = 0L;
-    unsigned long stopVoidPumpStartMs = 0L;
+    unsigned long cooldownMs = 0uL;
+    unsigned long preHeatHotWaterStartMs = 0uL;
+    unsigned long cleanStartMs = 0uL;
+    unsigned long purgeStartMs = 0uL;
 
 public:
     CleanColdWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, ColdWaterCommand *mColdWaterCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand);

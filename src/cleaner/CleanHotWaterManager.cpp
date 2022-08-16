@@ -37,6 +37,16 @@ void CleanHotWaterManager::loop()
         hotWaterCommand->turnOff();
         break;
     }
+    case State::COOLDOWN_AFTER_FILL:
+    {
+        *firstLineMsg = "Fin remplissage ";
+        if (millis() - cooldownMs > DELAY_BETWEEN_TWO_COMMAND_MS)
+        {
+            cleanStartMs = millis();
+            state = State::CLEANING_MACHINE;
+        }
+        break;
+    }
     case State::CLEANING_MACHINE:
     {
         cleanMachine();
@@ -50,6 +60,26 @@ void CleanHotWaterManager::loop()
     case State::PURGING_WATER:
     {
         purgeWater();
+        break;
+    }
+    case State::COOLDOWN_AFTER_PURGE:
+    {
+        *firstLineMsg = " Temporisation  ";
+        if (millis() - cooldownMs > DELAY_BETWEEN_TWO_COMMAND_MS)
+        {
+            voidPumpCommand->turnOff();
+            cooldownMs = millis();
+            state = State::FINAL_COOLDOWN;
+        }
+        break;
+    }
+    case State::FINAL_COOLDOWN:
+    {
+        *firstLineMsg = "      Fin       ";
+        if (millis() - cooldownMs > DELAY_BETWEEN_TWO_COMMAND_MS)
+        {
+            state = State::DONE;
+        }
         break;
     }
 
@@ -78,8 +108,8 @@ void CleanHotWaterManager::fillWater()
         coldWaterCommand->turnOff();
         hotWaterCommand->turnOff();
 
-        cleanStartMs = millis();
-        state = State::CLEANING_MACHINE;
+        cooldownMs = millis();
+        state = State::COOLDOWN_AFTER_FILL;
     }
 }
 
@@ -121,7 +151,7 @@ void CleanHotWaterManager::evacuateWater()
     if (millis() - evacuationStartMs > EVACUATION_DURATION_MS)
     {
         purgeStartMs = millis();
-        stopVoidPumpStartMs = purgeStartMs + PURGE_DURATION_MS;
+        cooldownMs = purgeStartMs + PURGE_DURATION_MS;
         state = State::PURGING_WATER;
     }
 }
@@ -135,12 +165,8 @@ void CleanHotWaterManager::purgeWater()
     if (millis() - purgeStartMs > PURGE_DURATION_MS)
     {
         milkPumpCommand->turnOff();
-
-        if (millis() - stopVoidPumpStartMs > STOP_VOID_PUMP_DURATION_MS)
-        {
-            voidPumpCommand->turnOff();
-            state = State::DONE;
-        }
+        cooldownMs = millis();
+        state = State::COOLDOWN_AFTER_PURGE;
     }
 }
 

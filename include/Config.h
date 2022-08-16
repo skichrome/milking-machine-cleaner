@@ -58,10 +58,10 @@
 
 #define EVACUATION_DURATION_MS 2uL * 60uL * 1000uL
 #define PURGE_DURATION_MS 7uL * 1000uL
-#define STOP_VOID_PUMP_DURATION_MS 1uL * 1000uL
+#define DELAY_BETWEEN_TWO_COMMAND_MS 2uL * 1000uL
 
 // ---------------- //
-//       Ledsn       //
+//       Leds       //
 // ---------------- //
 
 #define PIN_RGB_LED_RED 2

@@ -18,9 +18,12 @@ private:
         WAITING_START,
         FILLING_WATER,
         PAUSE_FILLING_WATER,
+        COOLDOWN_AFTER_FILL,
         CLEANING_MACHINE,
         EVACUATING_WATER,
         PURGING_WATER,
+        COOLDOWN_AFTER_PURGE,
+        FINAL_COOLDOWN,
         DONE
     } state;
 
@@ -43,16 +46,16 @@ private:
     const char **secondLineMsg;
     String tmpSecondLineStr;
 
-    unsigned long cleanStartMs = 0L;
-    unsigned long evacuationStartMs = 0L;
-    unsigned long purgeStartMs = 0L;
-    unsigned long stopVoidPumpStartMs = 0L;
+    unsigned long cooldownMs = 0uL;
+    unsigned long cleanStartMs = 0uL;
+    unsigned long evacuationStartMs = 0uL;
+    unsigned long purgeStartMs = 0uL;
 
     // Todo: TMP manual evacuation mode
     bool isBtnPressed = false;
     bool ledState = true;
-    unsigned long ledBlinkStartMs = 0L;
-    const unsigned long LED_BLINK_DURATION_MS = 500L;
+    unsigned long ledBlinkStartMs = 0uL;
+    const unsigned long LED_BLINK_DURATION_MS = 500uL;
 
 public:
     CleanHotWaterManager(VoidPumpCommand *mVoidPumpCommand, MilkPumpCommand *mMilkPumpCommand, ColdWaterCommand *mColdWaterCommand, HotWaterCommand *mHotWaterCommand, ThreeWayValveCommand *mThreeWayValveCommand);

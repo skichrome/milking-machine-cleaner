@@ -37,6 +37,16 @@ void CleanColdWaterManager::loop()
         hotWaterCommand->turnOff();
         break;
     }
+    case State::COOLDOWN_AFTER_FILL:
+    {
+        *firstLineMsg = "Fin remplissage ";
+        if (millis() - cooldownMs > DELAY_BETWEEN_TWO_COMMAND_MS)
+        {
+            cleanStartMs = millis();
+            state = State::CLEANING_MACHINE;
+        }
+        break;
+    }
     case State::CLEANING_MACHINE:
     {
         cleanMachine();
@@ -45,6 +55,26 @@ void CleanColdWaterManager::loop()
     case State::PURGING_WATER:
     {
         purgeWater();
+        break;
+    }
+    case State::COOLDOWN_AFTER_PURGE:
+    {
+        *firstLineMsg = " Temporisation  ";
+        if (millis() - cooldownMs > DELAY_BETWEEN_TWO_COMMAND_MS)
+        {
+            voidPumpCommand->turnOff();
+            cooldownMs = millis();
+            state = State::FINAL_COOLDOWN;
+        }
+        break;
+    }
+    case State::FINAL_COOLDOWN:
+    {
+        *firstLineMsg = "      Fin       ";
+        if (millis() - cooldownMs > DELAY_BETWEEN_TWO_COMMAND_MS)
+        {
+            state = State::DONE;
+        }
         break;
     }
 
@@ -81,8 +111,9 @@ void CleanColdWaterManager::fillWater()
     if (waterSensor.isLevelReached())
     {
         coldWaterCommand->turnOff();
-        cleanStartMs = millis();
-        state = State::CLEANING_MACHINE;
+        hotWaterCommand->turnOff();
+        cooldownMs = millis();
+        state = State::COOLDOWN_AFTER_FILL;
     }
 }
 
@@ -96,7 +127,7 @@ void CleanColdWaterManager::cleanMachine()
     if (millis() - cleanStartMs > (isDryingRequired ? CLEAN_AND_DRY_COLD_WATER_DURATION_MS : CLEAN_COLD_WATER_DURATION_MS))
     {
         purgeStartMs = millis();
-        stopVoidPumpStartMs = purgeStartMs + PURGE_DURATION_MS;
+        cooldownMs = purgeStartMs + PURGE_DURATION_MS;
         state = State::PURGING_WATER;
     }
 }
@@ -111,12 +142,8 @@ void CleanColdWaterManager::purgeWater()
     if (millis() - purgeStartMs > PURGE_DURATION_MS)
     {
         milkPumpCommand->turnOff();
-
-        if (millis() - stopVoidPumpStartMs > STOP_VOID_PUMP_DURATION_MS)
-        {
-            voidPumpCommand->turnOff();
-            state = State::DONE;
-        }
+        cooldownMs = millis();
+        state = State::COOLDOWN_AFTER_PURGE;
     }
 }
 
