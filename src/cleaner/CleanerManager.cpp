@@ -185,6 +185,7 @@ void CleanerManager::pauseOrResumeFill()
     else if (hotWaterCleaner->isStarted())
         hotWaterCleaner->pauseFillingWater();
 
-    if (hotWaterCleaner->isStarted())
-        hotWaterCleaner->endEvacuate();
+    // Todo: TMP manual evacuation mode
+//    if (hotWaterCleaner->isStarted())
+//        hotWaterCleaner->endEvacuate();
 }

@@ -15,8 +15,8 @@ void CleanHotWaterManager::setup()
     state = State::WAITING_START;
 
     // Todo: TMP Evacuation mode
-    pinMode(PIN_RGB_LED_RED, OUTPUT);
-    digitalWrite(PIN_RGB_LED_RED, ledState);
+    //pinMode(PIN_RGB_LED_RED, OUTPUT);
+    //digitalWrite(PIN_RGB_LED_RED, ledState);
 }
 
 void CleanHotWaterManager::loop()
@@ -122,22 +122,22 @@ void CleanHotWaterManager::cleanMachine()
     if (millis() - cleanStartMs > CLEAN_HOT_WATER_DURATION_MS)
     {
         // Todo: Auto mode with 3-way valve
-        // evacuationStartMs = millis();
-        // state = State::EVACUATING_WATER;
+        evacuationStartMs = millis();
+        state = State::EVACUATING_WATER;
 
         // Todo: TMP manual mode
-        digitalWrite(PIN_RGB_LED_RED, ledState);
-        if (millis() - ledBlinkStartMs > LED_BLINK_DURATION_MS)
-        {
-            ledState = !ledState;
-            ledBlinkStartMs = millis();
-        }
-        if (isBtnPressed)
-        {
-            digitalWrite(PIN_RGB_LED_RED, true);
-            evacuationStartMs = millis();
-            state = State::EVACUATING_WATER;
-        }
+        //digitalWrite(PIN_RGB_LED_RED, ledState);
+        //if (millis() - ledBlinkStartMs > LED_BLINK_DURATION_MS)
+        //{
+        //    ledState = !ledState;
+        //    ledBlinkStartMs = millis();
+        //}
+        //if (isBtnPressed)
+        //{
+        //    digitalWrite(PIN_RGB_LED_RED, true);
+        //    evacuationStartMs = millis();
+        //    state = State::EVACUATING_WATER;
+        //}
     }
 }
 
@@ -240,8 +240,8 @@ void CleanHotWaterManager::resetIfDone()
 
 // Todo: TMP manual evacuation mode
 
-void CleanHotWaterManager::endEvacuate()
-{
-    if (state == State::CLEANING_MACHINE)
-        isBtnPressed = true;
-}
+//void CleanHotWaterManager::endEvacuate()
+//{
+//    if (state == State::CLEANING_MACHINE)
+//        isBtnPressed = true;
+//}
