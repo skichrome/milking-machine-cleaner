@@ -50,6 +50,7 @@ private:
     unsigned long cleanStartMs = 0uL;
     unsigned long evacuationStartMs = 0uL;
     unsigned long purgeStartMs = 0uL;
+    unsigned long milkPumpDelay = 0uL;
 
     // Todo: TMP manual evacuation mode
     //bool isBtnPressed = false;
@@ -70,9 +71,6 @@ public:
     bool isFillingPaused();
     bool isDone();
     void resetIfDone();
-
-    // Todo: TMP manual evacuation mode
-//    void endEvacuate();
 };
 
 #endif

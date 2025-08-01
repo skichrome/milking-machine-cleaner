@@ -8,7 +8,8 @@
 #define HOT_WATER_CLEAN_SEQ_SIZE 3
 #define FIRST_RINCE_CLEAN_SEQ_SIZE 2
 #define SECOND_RINCE_CLEAN_SEQ_SIZE 1
-#define PERACETIC_CLEAN_SEQ_SIZE 3
+#define MILK_CONTROL_CLEAN_SEQ_SIZE 5
+#define PERACETIC_CLEAN_SEQ_SIZE 2
 #define IMPACT_CLEAN_SEQ_SIZE 5
 #define ONLY_HOT_WATER_CLEAN_SEQ_SIZE 1
 #define ONLY_FIRST_RINCE_CLEAN_SEQ_SIZE 1
@@ -51,7 +52,8 @@ private:
     CleanState hotWaterCleanSequence[HOT_WATER_CLEAN_SEQ_SIZE] = {CleanState::CLEAN, CleanState::RINCE, CleanState::RINCE_AND_DRY};
     CleanState firstRinceCleanSequence[FIRST_RINCE_CLEAN_SEQ_SIZE] = {CleanState::RINCE, CleanState::RINCE_AND_DRY};
     CleanState secondRinceCleanSequence[SECOND_RINCE_CLEAN_SEQ_SIZE] = {CleanState::RINCE_AND_DRY};
-    CleanState peraceticCleanSequence[PERACETIC_CLEAN_SEQ_SIZE] = {CleanState::CLEAN_COLD, CleanState::RINCE, CleanState::RINCE_AND_DRY};
+    CleanState milkControlCleanSequence[MILK_CONTROL_CLEAN_SEQ_SIZE] = {CleanState::PREWASH, CleanState::CLEAN, CleanState::RINCE, CleanState::CLEAN_COLD, CleanState::RINCE_AND_DRY};
+    CleanState peraceticCleanSequence[PERACETIC_CLEAN_SEQ_SIZE] = {CleanState::CLEAN_COLD, CleanState::RINCE_AND_DRY};
     CleanState impactCleanSequence[IMPACT_CLEAN_SEQ_SIZE] = {CleanState::PREWASH, CleanState::CLEAN, CleanState::CLEAN, CleanState::RINCE, CleanState::RINCE_AND_DRY};
     CleanState onlyHotWaterCleanSequence[ONLY_HOT_WATER_CLEAN_SEQ_SIZE] = {CleanState::CLEAN};
     CleanState onlyFirstRinceCleanSequence[ONLY_FIRST_RINCE_CLEAN_SEQ_SIZE] = {CleanState::RINCE};

@@ -37,9 +37,9 @@
 //       Ecran      //
 // ---------------- //
 
-// Adresse de l'écran pour l'affichage visuel des menus et des statuts
+// Adresse de l'écran pour l'affichage visuel des menus et des statuts Soit  0x3F soit 0x27 pour les tests
 // A déterminer avec un programme de recherche de périphériques I2C disponible sur internet
-#define LCD_I2C_ADDRESS 0x27
+#define LCD_I2C_ADDRESS 0x3F
 
 // Nombre de caractères de l'écran par ligne
 #define LCD_MAX_LENGTH 16
@@ -59,6 +59,8 @@
 #define EVACUATION_DURATION_MS 2uL * 60uL * 1000uL
 #define PURGE_DURATION_MS 7uL * 1000uL
 #define DELAY_BETWEEN_TWO_COMMAND_MS 2uL * 1000uL
+
+#define DELAY_HOT_WATER_MILK_PUMP_START 15uL * 1000uL
 
 // ---------------- //
 //       Leds       //

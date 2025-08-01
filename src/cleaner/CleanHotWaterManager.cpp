@@ -43,6 +43,7 @@ void CleanHotWaterManager::loop()
         if (millis() - cooldownMs > DELAY_BETWEEN_TWO_COMMAND_MS)
         {
             cleanStartMs = millis();
+            milkPumpDelay = millis();
             state = State::CLEANING_MACHINE;
         }
         break;
@@ -50,10 +51,13 @@ void CleanHotWaterManager::loop()
     case State::CLEANING_MACHINE:
     {
         cleanMachine();
+        if(millis() - milkPumpDelay > DELAY_HOT_WATER_MILK_PUMP_START)
+            milkPumpCommand->turnOn();
         break;
     }
     case State::EVACUATING_WATER:
     {
+        milkPumpCommand->turnOff();
         evacuateWater();
         break;
     }
@@ -121,23 +125,8 @@ void CleanHotWaterManager::cleanMachine()
     voidPumpCommand->turnOn();
     if (millis() - cleanStartMs > CLEAN_HOT_WATER_DURATION_MS)
     {
-        // Todo: Auto mode with 3-way valve
         evacuationStartMs = millis();
         state = State::EVACUATING_WATER;
-
-        // Todo: TMP manual mode
-        //digitalWrite(PIN_RGB_LED_RED, ledState);
-        //if (millis() - ledBlinkStartMs > LED_BLINK_DURATION_MS)
-        //{
-        //    ledState = !ledState;
-        //    ledBlinkStartMs = millis();
-        //}
-        //if (isBtnPressed)
-        //{
-        //    digitalWrite(PIN_RGB_LED_RED, true);
-        //    evacuationStartMs = millis();
-        //    state = State::EVACUATING_WATER;
-        //}
     }
 }
 
@@ -237,11 +226,3 @@ void CleanHotWaterManager::resetIfDone()
     if (state == State::DONE)
         state = State::WAITING_START;
 }
-
-// Todo: TMP manual evacuation mode
-
-//void CleanHotWaterManager::endEvacuate()
-//{
-//    if (state == State::CLEANING_MACHINE)
-//        isBtnPressed = true;
-//}
