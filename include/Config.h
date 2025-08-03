@@ -60,7 +60,7 @@
 #define PURGE_DURATION_MS 7uL * 1000uL
 #define DELAY_BETWEEN_TWO_COMMAND_MS 2uL * 1000uL
 
-#define DELAY_HOT_WATER_MILK_PUMP_START 25uL * 1000uL
+#define DELAY_HOT_WATER_MILK_PUMP_START 60uL * 1000uL
 
 // ---------------- //
 //       Leds       //
